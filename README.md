@@ -16,19 +16,30 @@ In short you need to:
 1. Register at the Mi Website your device
 2. [Download](http://www1.miwifi.com/miwifi_download.html) the development firmware and the [SSH](http://d.miwifi.com/rom/ssh) Flash.
 3. Flashing first the device using the development firmware, using a pendrive/usb. After development firmware is installed the same procedure needs to be done with the SSH patch.
-4. Connect to the device using SSH. The password is obtained on the SSH website, if registration has already succeeded. ```bash
-root@192.168.31.1
-```
-5. Flash with your preferred firmware the device. E.g. ```bash 
-cd /tmp; wget http://downloads.openwrt.org/chaos_calmer/15.05/ramips/mt7620/openwrt-15.05-ramips-mt7620-xiaomi-miwifi-mini-squashfs-sysupgrade.bin
-cat /proc/mtd
-```
+4. Connect to the device using SSH. The password is obtained on the SSH website, if registration has already succeeded. 
+    ```bash
+    root@192.168.31.1
+    ```
+5. Flash with your preferred firmware the device. E.g. 
+    ```bash 
+    cd /tmp; wget http://downloads.openwrt.org/chaos_calmer/15.05/ramips/mt7620/openwrt-15.05-ramips-mt7620-xiaomi-miwifi-mini-squashfs-sysupgrade.bin
+    cat /proc/mtd
+    ```
+
 One other option is directly getting PandoraBox, which comes with some preinstalled packages, from [here](http://downloads.openwrt.org.cn/PandoraBox/Xiaomi-Mini-R1CM/stable/)
 If there is a line "OS1", use OS1 in the following command as parameter, otherwise "firmware".
+
 ```bash
 mtd -r write openwrt-15.05-ramips-mt7620-xiaomi-miwifi-mini-squashfs-sysupgrade.bin OS1
 ```
-6. After flashing is done, connect via LAN to the device on host ```192.168.1.1``` with User: root, no password.
+
+6. After flashing is done, connect via LAN to the device on host 
+```bash 
+ssh root@192.168.1.1
+``` 
+with User: root, no password.
+
+Youre done and can begin working on the newly installed OpenWRT router.
 
 
 ## Necessary Packages

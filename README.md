@@ -59,7 +59,7 @@ opkg install luci-proto-ppp
 ```
 
 To configure PPTP, it's nicety to use the Luci interface. Just go to:
-Interfaces --> New Interface --> pptp.
+Interfaces → New Interface → pptp.
 Then simply configure your VPN.
 
 After configuring, go to "Additional Settings" and remove the checked "use as default". If this is not done the VPN will be used as the default gateway for all the input/output of the router.
@@ -69,7 +69,7 @@ ChinaDNS, and ChinaDns-Luci ( if GUI is requested )
 
 Take one of [these](http://sourceforge.net/projects/openwrt-dist/files/luci-app/chinadns/) luci-apps and accoringly one ChinaDNS [package](http://sourceforge.net/projects/openwrt-dist/files/chinadns/1.3.2-d3e75dd/ChinaDNS_1.3.2-3_ramips_24kec.ipk/download).
 
-After the installation of the Luci package, a new category under the "Services" will appear. Click on Services --> ChinaDNS. 
+After the installation of the Luci package, a new category under the "Services" will appear. Click on Services → ChinaDNS. 
 
 Now configure the following:
 

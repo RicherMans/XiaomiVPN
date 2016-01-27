@@ -13,6 +13,7 @@ On top of that another SSID is established which operates exclusively over the V
 
 To install Openwrt on the MiWifi Router, manifold tutorials exists. [This](https://wiki.openwrt.org/toh/xiaomi/mini) tutorial is the official OpenWrt tutorial. 
 In short you need to:
+
 1. Register at the Mi Website your device
 2. [Download](http://www1.miwifi.com/miwifi_download.html) the development firmware and the [SSH](http://d.miwifi.com/rom/ssh) Flash.
 3. Flashing first the device using the development firmware, using a pendrive/usb. After development firmware is installed the same procedure needs to be done with the SSH patch.

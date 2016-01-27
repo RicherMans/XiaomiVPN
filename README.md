@@ -43,7 +43,7 @@ with User: root, no password.
 Youre done and can begin working on the newly installed OpenWRT router.
 
 
-## Necessary Packages
+## Package Installation and Configuration
 
 Multiple Packages are required to get a VPN and ChinaDNS running.
 
@@ -57,6 +57,12 @@ opkg update
 opkg install ppp-mod-pptp kmod-nf-nathelper-extra
 opkg install luci-proto-ppp
 ```
+
+To configure PPTP, it's nicety to use the Luci interface. Just go to:
+Interfaces --> New Interface --> pptp.
+Then simply configure your VPN.
+
+After configuring, go to "Additional Settings" and remove the checked "use as default". If this is not done the VPN will be used as the default gateway for all the input/output of the router.
 
 ### ChinaDNS
 ChinaDNS, and ChinaDns-Luci ( if GUI is requested )
@@ -73,10 +79,34 @@ Now configure the following:
 - CHNRoute File: /etc/chinadns_chnroute.txt
 - Upstream Servers: 114.114.114.114,8.8.8.8
 
+Afterwards either check if chinadns is running by either looking in the luci page, or to be very sure, log into the router and run
+```bash
+/etc/init.d/chinadns enable
+/etc/init.d/chinadns start
+```
+
+Which starts the service and also puts it on autostart.
+
+
+### DHCP and DNS
+
+After ChinaDNS is sucessfully installed, login into the Luci interface and go to
+Luci → Network → DHCP and DNS.
+
+* General Settings
+ * DNS forwardings : 127.0.0.1#5353
+
+* Resolv and Hosts File
+ * Check that
+
+
 
 
 ### Why do we need ChinaDNS?
 It appreads that in some cases, even if your VPN is running, Chinas GFW will still block content from youtube and facebook ( maybe also others, but these were the most prominent). This is due to DNS poisoning from their side which somehow is not circumvented in the router ( Using the VPN on any usual device somehow leads to a proper result).
 
+## Routing setup
+
+Lastly, we use iptables to enable policy structured routing.
 
 

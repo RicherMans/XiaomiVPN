@@ -1,6 +1,8 @@
 #!/bin/sh
 #
 # Restart VPNC if both of the specified hosts on the command line are unavailable
+RESTART_SCRIPT=$RESTART_SCRIPT
+
 
 if ! [ $(ping -q -c 1 ${1} 2>&1 | grep "1 packets received" | sed "s/.*\(1\) packets received.*/\1/") ] ||
    ! [ $(ping -q -c 1 ${2} 2>&1 | grep "1 packets received" | sed "s/.*\(1\) packets received.*/\1/") ]; then

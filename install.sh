@@ -1,21 +1,14 @@
 #!/bin/sh
 
-
-
-
-
-
-SCRIPTNAME="add_vpn_tables.sh"
-# Add the VPN rule into IpTables
-
-
 addVPNTable(){
+    # Add the VPN rule into IpTables
     echo "10    vpn" >> /etc/iproute2/rt_tables
 }
 
 replaceAddScript () {
 
-    tmpfile="tmpscriptfile"
+    local scriptfile=$1
+    local tmpfile=$2
 
     touch $tmpfile
 
@@ -25,9 +18,17 @@ replaceAddScript () {
 
 }
 
+replaceRestart () {
+
+}
+
+
+# Define variables
+SCRIPTNAME="add_vpn_tables.sh"
 VPN_ADDR="awd"
 HOME_NET=""
 VPN_DEV=""
+TMP_SCRIPT_FILE="tmpscriptfile"
 
 # Prompts to obtain the VPN_ADDR variable
 while true; do
@@ -68,7 +69,7 @@ echo "Checking for the VPN-Device to exist"
 
 ip a | grep -Eq ': $VPN_DEV:.*state UP'
 
-replaceAddScript
+replaceAddScript $SCRIPTNAME $TMP_SCRIPT_FILE
 
 
 # cp $SCRIPTNAME /etc/init.d/

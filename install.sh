@@ -30,45 +30,41 @@ replaceAddScript () {
 
 }
 
-# replaceRestart () {
-
-# }
-
 
 # Prompts to obtain the VPN_ADDR variable
-# while true; do
-#         echo -n "Please input the remote VPN address of the VPN!"
-#         read answer
-#         if echo "$answer" | grep -qE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" ;then
-#             VPN_ADDR=$answer
-#             break;
-#         else
-#             echo "Given argument is not a ip adress, retry!"
-#         fi
-# done
+while true; do
+        echo -n "Please input the remote VPN address of the VPN!"
+        read answer
+        if echo "$answer" | grep -qE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" ;then
+            VPN_ADDR=$answer
+            break;
+        else
+            echo "Given argument is not a ip adress, retry!"
+        fi
+done
 
-# # Prompts to obtain the HOME_NET Variable
-# while true; do
-#         echo -n "Please input the current networks specified ip address, which the VPN is connected to!"
-#         read answer
-#         if echo "$answer" | grep -qE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" ;then
-#             HOME_NET=$answer
-#             break;
-#         else
-#             echo "Given argument is not a ip adress, retry!"
-#         fi
-#     done
-# # Prompts to obtain the VPN_DEV Variable
-# while true; do
-#         echo -n "Please input the local VPN device's name!"
-#         read answer
-#         if echo "$answer" | grep -qE "^[a-zA-Z]" ;then
-#             VPN_DEV=$answer
-#             break;
-#         else
-#             echo "Given argument is not a device name, retry!"
-#         fi
-# done
+# Prompts to obtain the HOME_NET Variable
+while true; do
+        echo -n "Please input the current networks specified ip address, which the VPN is connected to!"
+        read answer
+        if echo "$answer" | grep -qE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" ;then
+            HOME_NET=$answer
+            break;
+        else
+            echo "Given argument is not a ip adress, retry!"
+        fi
+    done
+# Prompts to obtain the VPN_DEV Variable
+while true; do
+        echo -n "Please input the local VPN device's name!"
+        read answer
+        if echo "$answer" | grep -qE "^[a-zA-Z]" ;then
+            VPN_DEV=$answer
+            break;
+        else
+            echo "Given argument is not a device name, retry!"
+        fi
+done
 
 echo "Checking for the VPN-Device to exist"
 
@@ -78,7 +74,7 @@ replaceAddScript $ADDRULE_SCRIPT $TMP_SCRIPT_FILE
 
 
 # Copying scripts
-cp $ADDRULE_SCRIPT /etc/init.d/$ADDRULE_SCRIPT
+cp $TMP_SCRIPT_FILE /etc/init.d/$ADDRULE_SCRIPT
 chmod a+x /etc/init.d/$ADDRULE_SCRIPT
 
 cp $RECONNECT_SCRIPT /etc/init.d/$RECONNECT_SCRIPT
@@ -87,6 +83,9 @@ chmod a+x /etc/init.d/$RECONNECT_SCRIPT
 # Adds to the vpn table configure
 addVPNTable
 
+#Enable the ip rules
+/etc/init.d/$ADDRULE_SCRIPT enable && /etc/init.d/$ADDRULE_SCRIPT start
+
 if [ -e "/etc/init.d/$RECONNECT_SCRIPT" ]; then
   if ! fgrep -q "vpn" '/etc/crontab' ; then
     echo "Adding reconnect script to crontab"
@@ -94,5 +93,5 @@ if [ -e "/etc/init.d/$RECONNECT_SCRIPT" ]; then
   fi
 fi
 
-/etc/init.d/cron start && /etc/init.d/cron enable && echo "Starting Crobjob to reconnect VPN"
+/etc/init.d/cron start && /etc/init.d/cron enable || echo "Starting Crobjob to reconnect VPN"
 
